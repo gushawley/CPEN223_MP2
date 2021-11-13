@@ -4,6 +4,8 @@
 //You should implement the requesed method.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace MP2
 {
@@ -47,7 +49,51 @@ namespace MP2
         /// </example>
         public static string Calculate(string expression)
         {
-            // To implement
+            List<StringBuilder> subEquations = new List<StringBuilder>();
+            subEquations.Add(new StringBuilder());
+            int groupingCounter = 0;
+            StringBuilder finalExpression = new StringBuilder();
+            for(int i = 0; i < expression.Length; i++)
+            {
+                if(expression[i] == '(')
+                {
+                    groupingCounter++;
+                    subEquations.Add(new StringBuilder());
+                }
+                else if(expression[i] == ')')
+                {
+                    double temp = Evaluate(subEquations[subEquations.Count - 1].ToString());
+                    subEquations.RemoveAt(subEquations.Count - 1);
+                    subEquations[subEquations.Count - 1].Append(" ");
+                    subEquations[subEquations.Count - 1].Append(temp);
+                    subEquations[subEquations.Count - 1].Append(" ");
+                    groupingCounter--;
+                }
+                else
+                {
+                    subEquations[subEquations.Count - 1].Append(expression[i]);
+                }
+            }
+            double solution = Evaluate(subEquations[0].ToString());
+            finalExpression.Append(expression.Replace(" ", ""));
+            for(int i = 0; i < finalExpression.Length; i++)
+            {
+                finalExpression.Insert(i * 2 + 1, " ");
+            }
+            finalExpression.Append("= ");
+            finalExpression.Append(solution);
+            return finalExpression.ToString();
+
+            double Evaluate(string subExpression)
+            {
+                List<string> parts = new List<string>(subExpression.Split(' '));
+                while (parts.Remove("")) ;
+
+
+            }
+
         }
+
+        
     }
 }
