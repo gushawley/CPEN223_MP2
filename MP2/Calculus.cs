@@ -114,7 +114,7 @@ namespace MP2
 
                 if (coefficientList.Count == 0)
                 {
-                    throw new InvalidOperationException("Empty");
+                    throw new InvalidOperationException("No polynomial is set.");
                 }
 
                 if (coefficientList[i] != 0)
@@ -123,7 +123,7 @@ namespace MP2
                     poly.Append("*");
                     poly.Append("x");
                     poly.Append("^");
-                    poly.Append(coefficientList[i] - (i + 1));
+                    poly.Append(coefficientList.Count - (i + 1));
 
                     if (coefficientList.Count - 1 != i )
                     {
@@ -244,7 +244,22 @@ namespace MP2
         /// </exception>
         public double EvaluatePolynomialDerivative(double x)
         {
-             
+            double derive = 0;
+
+            if (coefficientList.Count == 0)
+            {
+                throw new InvalidOperationException("No polynomial is set.");
+            }
+
+            for (int i = 0; i < coefficientList.Count; i++)
+            {
+                if (x == coefficientList[i])
+                {
+                    derive = x * coefficientList.Count - (i + 1);
+                }
+            }
+
+            return derive;
         }
 
         /// <summary>
