@@ -101,13 +101,14 @@ namespace MP2
              * and then adding them back between each character
              */
             finalExpression.Append(expression.Replace(" ", ""));
-            for(int i = 0; i < finalExpression.Length; i++)
+            int length = finalExpression.Length - 1;
+            for(int i = 0; i < length; i++)
             {
                 finalExpression.Insert(i * 2 + 1, " ");
             }
 
             //add '=' and the solution, then return the final string
-            finalExpression.Append("= ");
+            finalExpression.Append(" = ");
             finalExpression.Append(solution);
             return finalExpression.ToString();
 
