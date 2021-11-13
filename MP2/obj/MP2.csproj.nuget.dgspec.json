@@ -1,25 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "/Users/gm/Documents/GitHub/CPEN223_MP2/MP2/MP2.csproj": {}
+    "C:\\Users\\Dave\\Documents\\GitHub\\CPEN223_MP2\\MP2\\MP2.csproj": {}
   },
   "projects": {
-    "/Users/gm/Documents/GitHub/CPEN223_MP2/MP2/MP2.csproj": {
+    "C:\\Users\\Dave\\Documents\\GitHub\\CPEN223_MP2\\MP2\\MP2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/gm/Documents/GitHub/CPEN223_MP2/MP2/MP2.csproj",
+        "projectUniqueName": "C:\\Users\\Dave\\Documents\\GitHub\\CPEN223_MP2\\MP2\\MP2.csproj",
         "projectName": "MP2",
-        "projectPath": "/Users/gm/Documents/GitHub/CPEN223_MP2/MP2/MP2.csproj",
-        "packagesPath": "/Users/gm/.nuget/packages/",
-        "outputPath": "/Users/gm/Documents/GitHub/CPEN223_MP2/MP2/obj/",
+        "projectPath": "C:\\Users\\Dave\\Documents\\GitHub\\CPEN223_MP2\\MP2\\MP2.csproj",
+        "packagesPath": "C:\\Users\\Dave\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dave\\Documents\\GitHub\\CPEN223_MP2\\MP2\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/Users/gm/.config/NuGet/NuGet.Config"
+          "C:\\Users\\Dave\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -52,7 +57,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
