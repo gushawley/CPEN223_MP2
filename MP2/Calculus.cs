@@ -244,7 +244,7 @@ namespace MP2
         /// </exception>
         public double EvaluatePolynomialDerivative(double x)
         {
-             
+            return 0.0;
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace MP2
         /// </exception>
         public double EvaluatePolynomialIntegral(double a, double b)
         {
-
+            return 0.0;
         }
     }
 }
