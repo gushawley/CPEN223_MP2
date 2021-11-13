@@ -77,7 +77,7 @@ namespace MP2
         /// <returns>True if a valid polynomial, false otherwise.</returns>
         public bool IsValidPolynomial(string polynomial)
         {
-            double temp;
+            
 
             for (int i = 0; i < polynomial.Length; i++)
             {
