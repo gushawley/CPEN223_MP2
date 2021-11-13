@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{CB672CF1-5DB4-4055-B341-F7777367DADC}|Default">
+  <MonoDevelop.Ide.ItemProperties.MP2 PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Arithmetic.cs">
+    <Files>
+      <File FileName="Arithmetic.cs" Line="1" Column="1" />
+      <File FileName="CalculatorMain.cs" Line="1" Column="1" />
+      <File FileName="Calculus.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MP2" expanded="True">
+            <Node name="MP2" expanded="True">
+              <Node name="Arithmetic.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
