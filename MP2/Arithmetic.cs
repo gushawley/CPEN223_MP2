@@ -49,17 +49,34 @@ namespace MP2
         /// </example>
         public static string Calculate(string expression)
         {
+            //use a list of string builders to hold each level of grouping
             List<StringBuilder> subEquations = new List<StringBuilder>();
+            //add one string builder to the list to represent the whole equation
             subEquations.Add(new StringBuilder());
+
+            //create a grouping counter to ensure no asymetrical grouping
             int groupingCounter = 0;
+
+            //create a string builder to hold the final string to be returned
             StringBuilder finalExpression = new StringBuilder();
+
+            //loop through the length of the passed expression
             for(int i = 0; i < expression.Length; i++)
             {
-                if(expression[i] == '(')
+                /* if the current character is an open parenthesis, 
+                 * incriment the grouping counter and create a new subgrouping
+                 * by adding a new string buildet to the list
+                 */
+                if (expression[i] == '(')
                 {
                     groupingCounter++;
                     subEquations.Add(new StringBuilder());
                 }
+
+                /* if the current character is a close parenthesis,
+                 * evaluate the subgrouping, remove it from the list,
+                 * and append it to the next highest subgrouping.
+                 */
                 else if(expression[i] == ')')
                 {
                     double temp = Evaluate(subEquations[subEquations.Count - 1].ToString());
@@ -69,43 +86,74 @@ namespace MP2
                     subEquations[subEquations.Count - 1].Append(" ");
                     groupingCounter--;
                 }
+
+                //if the current character is any other character, append it to the current subgrouping
                 else
                 {
                     subEquations[subEquations.Count - 1].Append(expression[i]);
                 }
             }
+
+            //create a variable to hold the final value of the expression
             double solution = Evaluate(subEquations[0].ToString());
+
+            /* create standardized spacing in the final expression by removing all spaces
+             * and then adding them back between each character
+             */
             finalExpression.Append(expression.Replace(" ", ""));
             for(int i = 0; i < finalExpression.Length; i++)
             {
                 finalExpression.Insert(i * 2 + 1, " ");
             }
+
+            //add '=' and the solution, then return the final string
             finalExpression.Append("= ");
             finalExpression.Append(solution);
             return finalExpression.ToString();
 
+            /* Local function used to evaluate expressions after grouping is handled
+             * Returns: evaluated expression as a double
+             */
             double Evaluate(string subExpression)
             {
+                //create a list of all elements in the expression and remove empty strings
                 List<string> parts = new List<string>(subExpression.Split(' '));
                 while (parts.Remove("")) ;
+
+                //evaluate each type of opperation in the correct order
                 EMDAS("^", ref parts);
                 EMDAS("*", ref parts);
                 EMDAS("/", ref parts);
                 EMDAS("+", ref parts);
                 EMDAS("-", ref parts);
+
+                //return the final value as a double
                 return Convert.ToDouble(parts[0]);
             }
+
+            /* Local function used to replace all instances of a specified opperation in a list 
+             * with thier values
+             */
             void EMDAS (string opperator, ref List<string> parts)
             {
+                //while there are still instances of the specified opperator
                 while (parts.IndexOf(opperator) != -1)
                 {
+                    /* create variables to hold:
+                     * (currIndex) the index of the first instance of the opperator
+                     * (x) the first number involved in the opperation
+                     * (y) the second number involved in the opperation
+                     * (opSoln) the value of the opperation
+                     */
                     int currIndex = parts.IndexOf(opperator);
                     double x;
                     double y;
                     double opSoln = 0;
 
+                    //if the characters on either side of the opperator can be converted to doubles
                     if (double.TryParse(parts[currIndex - 1], out x) && double.TryParse(parts[currIndex + 1], out y))
                     {
+                        //carry out the opperation specified by the opperator
                         if(opperator == "^")
                         {
                             opSoln = Math.Pow(x, y);
@@ -128,7 +176,10 @@ namespace MP2
                         }
                     }
 
+                    //set the first number in the opperation equal to the evaluated opperation
                     parts[currIndex - 1] = opSoln.ToString();
+
+                    //remove the opperator and the second number
                     parts.RemoveRange(currIndex, 2);
 
                 }
