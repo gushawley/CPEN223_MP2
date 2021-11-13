@@ -88,8 +88,50 @@ namespace MP2
             {
                 List<string> parts = new List<string>(subExpression.Split(' '));
                 while (parts.Remove("")) ;
+                EMDAS("^", ref parts);
+                EMDAS("*", ref parts);
+                EMDAS("/", ref parts);
+                EMDAS("+", ref parts);
+                EMDAS("-", ref parts);
+                return Convert.ToDouble(parts[0]);
+            }
+            void EMDAS (string opperator, ref List<string> parts)
+            {
+                while (parts.IndexOf(opperator) != -1)
+                {
+                    int currIndex = parts.IndexOf(opperator);
+                    double x;
+                    double y;
+                    double opSoln = 0;
 
+                    if (double.TryParse(parts[currIndex - 1], out x) && double.TryParse(parts[currIndex + 1], out y))
+                    {
+                        if(opperator == "^")
+                        {
+                            opSoln = Math.Pow(x, y);
+                        }
+                        else if(opperator == "*")
+                        {
+                            opSoln = x * y;
+                        }
+                        else if(opperator == "/")
+                        {
+                            opSoln = x / y;
+                        }
+                        else if(opperator == "+")
+                        {
+                            opSoln = x + y;
+                        }
+                        else if(opperator == "-")
+                        {
+                            opSoln = x - y;
+                        }
+                    }
 
+                    parts[currIndex - 1] = opSoln.ToString();
+                    parts.RemoveRange(currIndex, 2);
+
+                }
             }
 
         }
