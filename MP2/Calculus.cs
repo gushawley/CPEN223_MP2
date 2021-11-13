@@ -146,7 +146,19 @@ namespace MP2
         /// </exception>
         public double EvaluatePolynomial(double x)
         {
-             
+            if (coefficientList == null)
+            {
+                throw new InvalidOperationException("No polynomial is set.");
+            }
+
+            double result = 0;
+
+            for (int i = coefficientList.Count; i >= 0; i--)
+            {
+                result += Math.Pow(x, i) * coefficientList[coefficientList.Count - i];
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -199,7 +211,24 @@ namespace MP2
         /// </exception>
         public List<double> GetAllRoots(double epsilon)
         {
-             
+            if (coefficientList == null)
+            {
+                throw new InvalidOperationException("No polynomial is set.");
+            }
+            List<double> roots = new List<double>();
+
+            int iterationMax = 10;
+
+            for (double guess = -50; guess < 50; guess = +0.5)
+            {
+                double result = NewtonRaphson(guess, epsilon, iterationMax);
+
+                if (NewtonRaphson(guess, epsilon, iterationMax) != double.NaN)
+                {
+                    roots.Add(result);
+                }
+            }
+            return roots;
         }
 
         /// <summary>
