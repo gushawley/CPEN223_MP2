@@ -153,9 +153,9 @@ namespace MP2
 
             double result = 0;
 
-            for (int i = coefficientList.Count; i >= 0; i--)
+            for (int i = coefficientList.Count; i > 0; i--)
             {
-                result += Math.Pow(x, i) * coefficientList[coefficientList.Count - i];
+                result += Math.Pow(x, i-1) * coefficientList[coefficientList.Count - i];
             }
 
             return result;
@@ -261,7 +261,21 @@ namespace MP2
         /// </exception>
         public double EvaluatePolynomialIntegral(double a, double b)
         {
+            double F_a = 0, F_b = 0;
 
+            for (int i = coefficientList.Count; i > 0; i--)
+            {
+                F_a += Math.Pow(a, i) * coefficientList[coefficientList.Count - i] / (i);
+            }
+
+            for (int i = coefficientList.Count; i > 0; i--)
+            {
+                F_b += Math.Pow(b, i) * coefficientList[coefficientList.Count - i] / (i);
+            }
+
+            double result = F_b - F_a;
+
+            return result;
         }
     }
 }
