@@ -8,19 +8,23 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\angus\\.nuget\\packages\\": {}
+    "C:\\Users\\Dave\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\angus\\Desktop\\UBC\\CPEN 223\\MP2\\CPEN223_MP2\\MP2\\MP2.csproj",
+      "projectUniqueName": "C:\\Users\\Dave\\Documents\\GitHub\\CPEN223_MP2\\MP2\\MP2.csproj",
       "projectName": "MP2",
-      "projectPath": "C:\\Users\\angus\\Desktop\\UBC\\CPEN 223\\MP2\\CPEN223_MP2\\MP2\\MP2.csproj",
-      "packagesPath": "C:\\Users\\angus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\angus\\Desktop\\UBC\\CPEN 223\\MP2\\CPEN223_MP2\\MP2\\obj\\",
+      "projectPath": "C:\\Users\\Dave\\Documents\\GitHub\\CPEN223_MP2\\MP2\\MP2.csproj",
+      "packagesPath": "C:\\Users\\Dave\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Dave\\Documents\\GitHub\\CPEN223_MP2\\MP2\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\angus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Dave\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -29,7 +29,36 @@ namespace MP2
         /// <returns>True if the polynomial is succeffully set, false otherwise.</returns>
         public bool SetPolynomial()
         {
+            double temp;
 
+            Console.WriteLine("Enter your polynomial.");
+
+            Console.Write("Type any number and add spaces in between them:  ");
+            string str = (Console.ReadLine());
+
+            if (!IsValidPolynomial(str))
+            {
+                return false;
+            }
+
+            string[] subs = str.Split(' ');
+
+            foreach (var sub in subs)
+            {
+                if (sub != "")
+                {
+                    if (double.TryParse(sub, out temp))
+                    {
+                        coefficientList.Add(temp);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -48,7 +77,17 @@ namespace MP2
         /// <returns>True if a valid polynomial, false otherwise.</returns>
         public bool IsValidPolynomial(string polynomial)
         {
-             
+            double temp;
+
+            for (int i = 0; i < polynomial.Length; i++)
+            {
+                if (!double.TryParse(polynomial, out temp) && polynomial[i] != ' ')
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
