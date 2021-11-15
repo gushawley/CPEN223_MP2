@@ -80,6 +80,13 @@ namespace MP2
                 else if(expression[i] == ')')
                 {
                     double temp = Evaluate(subEquations[subEquations.Count - 1].ToString());
+
+                    //make sure calculation was successful
+                    if(temp == double.NaN)
+                    {
+                        return "Invalid Expression";
+                    }
+
                     subEquations.RemoveAt(subEquations.Count - 1);
                     subEquations[subEquations.Count - 1].Append(" ");
                     subEquations[subEquations.Count - 1].Append(temp);
@@ -97,13 +104,19 @@ namespace MP2
             //create a variable to hold the final value of the expression
             double solution = Evaluate(subEquations[0].ToString());
 
+            //make sure expression was valid
+            if (groupingCounter != 0 || solution == double.NaN)
+            {
+                return "Invalid Expression";
+            }
+
             /* create standardized spacing in the final expression by removing all spaces
              * and then adding them back between each character
              */
-            finalExpression.Append(expression.Replace(" ", ""));
-            for(int i = 0; i < finalExpression.Length; i++)
+            
+            for(int i = 0; i < expression.Length; i++)
             {
-                finalExpression.Insert(i * 2 + 1, " ");
+                
             }
 
             //add '=' and the solution, then return the final string
@@ -120,13 +133,25 @@ namespace MP2
                 List<string> parts = new List<string>(subExpression.Split(' '));
                 while (parts.Remove("")) ;
 
-                //evaluate each type of opperation in the correct order
-                EMDAS("^", ref parts);
-                EMDAS("*", ref parts);
-                EMDAS("/", ref parts);
-                EMDAS("+", ref parts);
-                EMDAS("-", ref parts);
+                try
+                {
+                    //evaluate each type of opperation in the correct order
+                    EMDAS("^", ref parts);
+                    EMDAS("*", ref parts);
+                    EMDAS("/", ref parts);
+                    EMDAS("+", ref parts);
+                    EMDAS("-", ref parts);
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    return double.NaN;
+                }
 
+                //make sure that all elements have been used
+                if(parts.Count != 1)
+                {
+                    return double.NaN;
+                }
                 //return the final value as a double
                 return Convert.ToDouble(parts[0]);
             }
