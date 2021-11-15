@@ -54,8 +54,25 @@ namespace MP2
             //add one string builder to the list to represent the whole equation
             subEquations.Add(new StringBuilder());
 
+            string invalidExpression = "Invalid Expression";
+
             //create a grouping counter to ensure no asymetrical grouping
             int groupingCounter = 0;
+            for(int i = 0; i < expression.Length; i++)
+            {
+                if(expression[i] == '(')
+                {
+                    groupingCounter++;
+                }
+                else if(expression[i] == ')')
+                {
+                    groupingCounter--;
+                }
+            }
+            if(groupingCounter != 0)
+            {
+                return invalidExpression;
+            }
 
             //create a string builder to hold the final string to be returned
             StringBuilder finalExpression = new StringBuilder();
@@ -69,7 +86,6 @@ namespace MP2
                  */
                 if (expression[i] == '(')
                 {
-                    groupingCounter++;
                     subEquations.Add(new StringBuilder());
                 }
 
@@ -82,16 +98,15 @@ namespace MP2
                     double temp = Evaluate(subEquations[subEquations.Count - 1].ToString());
 
                     //make sure calculation was successful
-                    if(temp == double.NaN)
+                    if(double.IsNaN(temp))
                     {
-                        return "Invalid Expression";
+                        return invalidExpression;
                     }
 
                     subEquations.RemoveAt(subEquations.Count - 1);
                     subEquations[subEquations.Count - 1].Append(" ");
                     subEquations[subEquations.Count - 1].Append(temp);
                     subEquations[subEquations.Count - 1].Append(" ");
-                    groupingCounter--;
                 }
 
                 //if the current character is any other character, append it to the current subgrouping
@@ -105,27 +120,37 @@ namespace MP2
             double solution = Evaluate(subEquations[0].ToString());
 
             //make sure expression was valid
-            if (groupingCounter != 0 || solution == double.NaN)
+            if (double.IsNaN(solution))
             {
-                return "Invalid Expression";
+                return invalidExpression;
             }
 
             /* create standardized spacing in the final expression by removing all spaces
              * and then adding them back between each character
              */
+            string tempFinalExpression = expression.Replace(" ", "");
             
-            for(int i = 0; i < expression.Length; i++)
+            for(int i = 0; i < tempFinalExpression.Length-1; i++)
             {
-                
+                if ((char.IsDigit(tempFinalExpression[i]) || tempFinalExpression[i] == '.') && (char.IsDigit(tempFinalExpression[i+1]) || tempFinalExpression[i+1] == '.'))
+                {
+                    finalExpression.Append(tempFinalExpression[i]);
+                }
+                else
+                {
+                    finalExpression.Append(tempFinalExpression[i]);
+                    finalExpression.Append(" ");
+                }
             }
+            finalExpression.Append(tempFinalExpression[^1]);
 
             //add '=' and the solution, then return the final string
-            finalExpression.Append("= ");
+            finalExpression.Append(" = ");
             finalExpression.Append(solution);
             return finalExpression.ToString();
 
             /* Local function used to evaluate expressions after grouping is handled
-             * Returns: evaluated expression as a double
+             * Returns: evaluated expression as a double or NaN if Invalid Expression
              */
             double Evaluate(string subExpression)
             {
@@ -133,6 +158,7 @@ namespace MP2
                 List<string> parts = new List<string>(subExpression.Split(' '));
                 while (parts.Remove("")) ;
 
+                //use try catch to handle situations like 4 + where an opperator does not have numbers to use
                 try
                 {
                     //evaluate each type of opperation in the correct order
@@ -142,7 +168,7 @@ namespace MP2
                     EMDAS("+", ref parts);
                     EMDAS("-", ref parts);
                 }
-                catch (IndexOutOfRangeException)
+                catch (ArgumentException)
                 {
                     return double.NaN;
                 }
@@ -152,8 +178,17 @@ namespace MP2
                 {
                     return double.NaN;
                 }
-                //return the final value as a double
-                return Convert.ToDouble(parts[0]);
+
+                //use try catch to handle cases like 4+5 where there are no spaces around opperators
+                try
+                {
+                    //return the final value as a double
+                    return Convert.ToDouble(parts[0]);
+                }
+                catch (FormatException)
+                {
+                    return double.NaN;
+                }
             }
 
             /* Local function used to replace all instances of a specified opperation in a list 
@@ -175,32 +210,39 @@ namespace MP2
                     double y;
                     double opSoln = 0;
 
-                    //if the characters on either side of the opperator can be converted to doubles
-                    if (double.TryParse(parts[currIndex - 1], out x) && double.TryParse(parts[currIndex + 1], out y))
+                    //use try catch to handle situations like 4 + where an opperator does not have numbers to use
+                    try
                     {
-                        //carry out the opperation specified by the opperator
-                        if(opperator == "^")
+                        //if the characters on either side of the opperator can be converted to doubles
+                        if (double.TryParse(parts[currIndex - 1], out x) && double.TryParse(parts[currIndex + 1], out y))
                         {
-                            opSoln = Math.Pow(x, y);
-                        }
-                        else if(opperator == "*")
-                        {
-                            opSoln = x * y;
-                        }
-                        else if(opperator == "/")
-                        {
-                            opSoln = x / y;
-                        }
-                        else if(opperator == "+")
-                        {
-                            opSoln = x + y;
-                        }
-                        else if(opperator == "-")
-                        {
-                            opSoln = x - y;
+                            //carry out the opperation specified by the opperator
+                            if (opperator == "^")
+                            {
+                                opSoln = Math.Pow(x, y);
+                            }
+                            else if (opperator == "*")
+                            {
+                                opSoln = x * y;
+                            }
+                            else if (opperator == "/")
+                            {
+                                opSoln = x / y;
+                            }
+                            else if (opperator == "+")
+                            {
+                                opSoln = x + y;
+                            }
+                            else if (opperator == "-")
+                            {
+                                opSoln = x - y;
+                            }
                         }
                     }
-
+                    catch (IndexOutOfRangeException)
+                    {
+                        throw new ArgumentException("dangling opperator");
+                    }
                     //set the first number in the opperation equal to the evaluated opperation
                     parts[currIndex - 1] = opSoln.ToString();
 
